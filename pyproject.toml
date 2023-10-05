@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+#build-backend = "setuptools.build_meta"
+
+
+[tool.setuptools]
+packages = ["pip_qt"]
+
+
+[project]
+name = "pip-qt"
+authors = [
+    {name = "Hannes"},
+]
+description = "pip manager"
+readme = "docs/README.md"
+requires-python = ">=3.4"
+keywords = ["pypi", "pip", "packages","package", "installer"]
+#license = { file = "LICENSE" }
+classifiers = [
+    "Programming Language :: Python :: 3.7",
+]
+#dynamic = ["dependencies"]
+dependencies = ['importlib-metadata; python_version<"3.7"', "qtpy", "pip-search"]
+#dynamic = ["version"]
+version = "0.0.1"
+
+#[project.optional-dependencies]
+#yaml = ["pyyaml"]
+
+#[project.scripts]
+#my-script = "my_package.module:function"
+
+[project.urls]
+Source = "https://github.com/hannesdelbeke/pip-qt"
