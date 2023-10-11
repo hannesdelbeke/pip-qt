@@ -4,7 +4,7 @@ from qtpy.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLab
 from qtpy.QtWidgets import QTableWidget, QTableWidgetItem
 from qtpy import QtGui
 from qtpy.QtWidgets import QHeaderView
-import unipip
+import pypip
 from pathlib import Path
 
 
@@ -18,7 +18,7 @@ class PipInstaller(QWidget):
 
         # create row at top with browse button and text edit field
         self.path_label = QLabel("Path:")
-        self.path_input = QLineEdit(str(unipip.default_target_path))
+        self.path_input = QLineEdit(str(pypip.default_target_path))
         self.path_button = QPushButton("Browse")
         self.path_button.clicked.connect(self.browse_path)
         self.path_layout = QHBoxLayout()
@@ -74,14 +74,14 @@ class PipInstaller(QWidget):
 
     def ui_install_package(self):
         package_name = self.package_input.text()
-        unipip.install(package_name, target_path=self.path_input.text())
+        pypip.install(package_name, target_path=self.path_input.text())
 
 
     def ui_list_packages(self):
         self.output_table.setVisible(True)
         self.output_box.setVisible(False)
 
-        packages = unipip.list()
+        packages = pypip.list()
 
         table = self.output_table
         table.setColumnCount(3)
@@ -101,7 +101,7 @@ class PipInstaller(QWidget):
 
         # slow
         for i, (name, version) in enumerate(packages):
-            location = str(Path(unipip.get_location(name)))  # slo
+            location = str(Path(pypip.get_location(name)))  # slo
             location_item = QTableWidgetItem(location)
             table.setItem(i, 2, location_item)
             self.repaint()
@@ -136,13 +136,13 @@ class PipInstaller(QWidget):
         table.setColumnWidth(2, 70)
         table.setColumnWidth(3, 100)
 
-        unipip.list()  # create cache
+        pypip.list()  # create cache
 
         # Populate the table with the search results
         for i, package in enumerate(packages):
             name_item = QTableWidgetItem(package.name)
             version_item = QTableWidgetItem(package.version)
-            installed_version = unipip.get_version(package.name, cached=True)
+            installed_version = pypip.get_version(package.name, cached=True)
             installed_version_item = QTableWidgetItem(installed_version)
             released_item = QTableWidgetItem(package.released[:10])
             description_item = QTableWidgetItem(package.description)
@@ -163,7 +163,7 @@ class PipInstaller(QWidget):
         # Get the command to run
         command = custom_command or self.package_input.text().split()
 
-        output, error = unipip.run_command(command)
+        output, error = pypip.run_command(command)
 
         self.output_table.setVisible(False)
         self.output_box.setVisible(True)
