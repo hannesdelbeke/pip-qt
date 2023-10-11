@@ -13,7 +13,7 @@ authors = [
     {name = "Hannes"},
 ]
 description = "pip manager"
-readme = "docs/README.md"
+readme = "README.md"
 requires-python = ">=3.4"
 keywords = ["pypi", "pip", "packages","package", "installer"]
 #license = { file = "LICENSE" }
