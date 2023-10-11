@@ -1,91 +1,30 @@
 import sys
-import subprocess
 import pip_search
 from qtpy.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QTextEdit
 from qtpy.QtWidgets import QTableWidget, QTableWidgetItem
 from qtpy import QtGui
 from qtpy.QtWidgets import QHeaderView
-import importlib
-import pkgutil
-import os
-import pkg_resources  # todo replace deprecated module
-
-
-def run_command(command):
-    # pass custom python paths, in case they were dynamically added
-    my_env = os.environ.copy()
-    joined_paths = os.pathsep.join(sys.path)
-    env_var = my_env.get("PYTHONPATH")
-    if env_var:
-        joined_paths = f"{env_var}{os.pathsep}{joined_paths}"
-    my_env["PYTHONPATH"] = joined_paths
-
-    # Run the command and capture the output
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=my_env)
-    output, error = process.communicate()
-    return output, error
-
-
-def list_packages():
-    """return tuple of (name, version) for each installed package"""
-    output, error = run_command([sys.executable, "-m", "pip", "list"])
-
-    # Parse the output of the pip list command
-    packages = []
-    raw = output.decode()
-    # [print(x) for x in raw.split("\n")]
-
-    for line in raw.split("\n")[2:-1]:
-        name, version = line.split()
-        packages.append((name, version))
-    return packages
-
-
-def get_version(package_name) -> str:
-    """Return installed package version or empty string"""
-    packages = list_packages()
-    for name, version in packages:
-        if name == package_name:
-            return version
-    return ""
-
-
-def get_location(package_name) -> str:
-    output, error = run_command([sys.executable, "-m", "pip", "show", package_name])
-    raw = output.decode()
-    for line in raw.split("\n"):
-        if line.startswith("Location:"):
-            return line.split(" ")[1]
-    return ""
-
-
-def find_package_location(package_name):
-    try:
-        distribution = pkg_resources.get_distribution(package_name)
-        return distribution.location
-    except pkg_resources.DistributionNotFound:
-        return f"Package '{package_name}' not found."
-
-
-def get_location2(package_name) -> str:
-    try:
-        loader = pkgutil.get_loader(package_name)
-        if loader is not None:
-            package_location = os.path.dirname(loader.get_filename())
-            return package_location
-        else:
-            loc = find_package_location(package_name)
-            if loc:
-                return loc
-            else:
-                return f"Package '{package_name}' not found."
-    except ImportError:
-        return f"Error while trying to locate package '{package_name}'."
+import unipip
+from pathlib import Path
 
 
 class PipInstaller(QWidget):
+    # TODO option to set target path
+    # provide preset for path in dcc like Blender, Unreal, ...
+    # not all dcc have set path, e.g. Substance has no user path.
+
     def __init__(self):
         super().__init__()
+
+        # create row at top with browse button and text edit field
+        self.path_label = QLabel("Path:")
+        self.path_input = QLineEdit(str(unipip.default_target_path))
+        self.path_button = QPushButton("Browse")
+        self.path_button.clicked.connect(self.browse_path)
+        self.path_layout = QHBoxLayout()
+        self.path_layout.addWidget(self.path_label)
+        self.path_layout.addWidget(self.path_input)
+        self.path_layout.addWidget(self.path_button)
 
         # Create the UI elements
         self.package_label = QLabel("Package name:")
@@ -106,7 +45,8 @@ class PipInstaller(QWidget):
         self.output_table.horizontalHeader().setStretchLastSection(True)
 
         # Connect the buttons to their functions
-        self.install_button.clicked.connect(self.install_package)
+        self.install_button.clicked.connect(self.ui_install_package)
+        # TODO uninstall
         self.list_button.clicked.connect(self.ui_list_packages)
         self.search_button.clicked.connect(self.search_packages)
         self.run_button.clicked.connect(self.run_command)
@@ -121,24 +61,27 @@ class PipInstaller(QWidget):
         package_layout.addWidget(self.run_button)
 
         main_layout = QVBoxLayout()
+        main_layout.addLayout(self.path_layout)
         main_layout.addLayout(package_layout)
         main_layout.addWidget(self.output_box)
         main_layout.addWidget(self.output_table)
 
         self.setLayout(main_layout)
 
-    def install_package(self):
+    def browse_path(self):
+        path = QtGui.QFileDialog.getExistingDirectory(self, "Select Directory")
+        self.path_input.setText(path)
+
+    def ui_install_package(self):
         package_name = self.package_input.text()
-        command = [sys.executable, "-m", "pip", "install", package_name]
-        self.run_command(command)
-        importlib.invalidate_caches()  # todo add control
+        unipip.install(package_name, target_path=self.path_input.text())
 
 
     def ui_list_packages(self):
         self.output_table.setVisible(True)
         self.output_box.setVisible(False)
 
-        packages = list_packages()
+        packages = unipip.list()
 
         table = self.output_table
         table.setColumnCount(3)
@@ -158,10 +101,13 @@ class PipInstaller(QWidget):
 
         # slow
         for i, (name, version) in enumerate(packages):
-            location = get_location2(name)  # slo
+            location = str(Path(unipip.get_location(name)))  # slo
             location_item = QTableWidgetItem(location)
             table.setItem(i, 2, location_item)
             self.repaint()
+
+    def sort_by_column(self, column):
+        self.output_table.sortItems(column)
 
     def search_packages(self):
         self.output_table.setVisible(True)
@@ -175,11 +121,14 @@ class PipInstaller(QWidget):
         # Search for packages on PyPI
         packages = list(pip_search.search(query))
 
-        # Create the table w idget
+        # Create the table widget
         table = self.output_table
         table.setColumnCount(5)
         table.setHorizontalHeaderLabels(["Name", "Latest", "Installed",   "Released", "Description"])
         table.setRowCount(len(packages))
+
+        table.horizontalHeader().sectionClicked.connect(self.sort_by_column)  # TODO sort by column
+
         # set scale last olumn to max
         # table.horizontalHeader().setSectionResizeMode(4, QHeaderView.Stretch)
         table.setColumnWidth(0, 200)
@@ -187,11 +136,13 @@ class PipInstaller(QWidget):
         table.setColumnWidth(2, 70)
         table.setColumnWidth(3, 100)
 
+        unipip.list()  # create cache
+
         # Populate the table with the search results
         for i, package in enumerate(packages):
             name_item = QTableWidgetItem(package.name)
             version_item = QTableWidgetItem(package.version)
-            installed_version = get_version(package.name)
+            installed_version = unipip.get_version(package.name, cached=True)
             installed_version_item = QTableWidgetItem(installed_version)
             released_item = QTableWidgetItem(package.released[:10])
             description_item = QTableWidgetItem(package.description)
@@ -212,7 +163,7 @@ class PipInstaller(QWidget):
         # Get the command to run
         command = custom_command or self.package_input.text().split()
 
-        output, error = run_command(command)
+        output, error = unipip.run_command(command)
 
         self.output_table.setVisible(False)
         self.output_box.setVisible(True)
@@ -223,8 +174,22 @@ class PipInstaller(QWidget):
         self.output_box.insertPlainText(error.decode())
 
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
+def show(dark=False):
+    app = QApplication.instance()
+    new_app = False
+    if not app:
+        new_app = True
+        app = QApplication(sys.argv)
+
+    if dark:
+        import blender_stylesheet
+        blender_stylesheet.setup()
     window = PipInstaller()
     window.show()
-    sys.exit(app.exec_())
+
+    if new_app:
+        app.exec_()
+
+
+if __name__ == "__main__":
+    show()
