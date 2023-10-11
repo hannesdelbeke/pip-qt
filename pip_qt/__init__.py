@@ -190,6 +190,8 @@ def show(dark=False):
     if new_app:
         app.exec_()
 
+    return window
+
 
 if __name__ == "__main__":
     show()
