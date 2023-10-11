@@ -12,3 +12,8 @@ pip qt widget to install new python modules from within your python environment.
 - qtpy
 
 if using Blender, check out the [pip qt addon](https://github.com/hannesdelbeke/pip-qt-addon)
+
+### Similar
+- https://github.com/open-cogsci/python-qtpip 3y old, uses pip search, outdated, unclear docs
+- https://github.com/techbliss/Pip_QT_Gui 8 year old, PyQt4
+- https://github.com/NathanVaughn/PipQt 4year old, - PySide2, nice UI
