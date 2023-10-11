@@ -8,3 +8,5 @@ pip qt widget to install new python modules from within your python environment.
 - [py-pip](https://github.com/hannesdelbeke/py-pip)
 - pip_search
 - qtpy
+
+if using Blender, check out the [pip qt addon](https://github.com/hannesdelbeke/pip-qt-addon)
