@@ -1,5 +1,4 @@
 import sys
-import pip_search
 from qtpy.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QTextEdit
 from qtpy.QtWidgets import QTableWidget, QTableWidgetItem
 from qtpy import QtGui
@@ -118,6 +117,8 @@ class PipInstaller(QWidget):
             self.repaint()
 
     def search_packages(self):
+        import pip_search
+
         self.output_table.setVisible(True)
         self.output_box.setVisible(False)
 

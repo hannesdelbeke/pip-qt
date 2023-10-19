@@ -1,3 +1,3 @@
-pip-search
-qtpy
-py-pip
+pip-search  # used to search for packages, optional if you don't use search
+qtpy  # ui wrapper to stay compatible with multiple qt bindings
+py-pip  # used for core logic
