@@ -1,5 +1,5 @@
 import sys
-from qtpy.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QTextEdit
+from qtpy.QtWidgets import QFileDialog, QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QTextEdit
 from qtpy.QtWidgets import QTableWidget, QTableWidgetItem
 from qtpy import QtGui
 from qtpy.QtWidgets import QHeaderView
@@ -74,7 +74,7 @@ class PipInstaller(QWidget):
         self.resize(800, 300)
 
     def browse_path(self):
-        path = QtGui.QFileDialog.getExistingDirectory(self, "Select Directory")
+        path = QFileDialog.getExistingDirectory(self, "Select Directory")
         self.path_input.setText(path)
 
     def ui_install_package(self):
