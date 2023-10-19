@@ -6,6 +6,7 @@ from qtpy import QtGui
 from qtpy.QtWidgets import QHeaderView
 import py_pip
 from pathlib import Path
+from qtpy.QtCore import Qt
 
 
 class PipInstaller(QWidget):
@@ -96,6 +97,8 @@ class PipInstaller(QWidget):
         table.setHorizontalHeaderLabels(["Name", "Version", "Location"])
         table.setRowCount(len(packages))
 
+        table.setSortingEnabled(True)
+
         # Populate the table with the installed packages
         for i, (name, version) in enumerate(packages):
             name_item = QTableWidgetItem(name)
@@ -113,9 +116,6 @@ class PipInstaller(QWidget):
             location_item = QTableWidgetItem(location)
             table.setItem(i, 2, location_item)
             self.repaint()
-
-    def sort_by_column(self, column):
-        self.output_table.sortItems(column)
 
     def search_packages(self):
         self.output_table.setVisible(True)
@@ -135,7 +135,7 @@ class PipInstaller(QWidget):
         table.setHorizontalHeaderLabels(["Name", "Latest", "Installed",   "Released", "Description"])
         table.setRowCount(len(packages))
 
-        table.horizontalHeader().sectionClicked.connect(self.sort_by_column)  # TODO sort by column
+        table.setSortingEnabled(True)
 
         # set scale last olumn to max
         # table.horizontalHeader().setSectionResizeMode(4, QHeaderView.Stretch)
