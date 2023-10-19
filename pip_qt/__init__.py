@@ -30,6 +30,7 @@ class PipInstaller(QWidget):
         self.package_label = QLabel("Package name:")
         self.package_input = QLineEdit()
         self.install_button = QPushButton("Install")
+        self.uninstall_button = QPushButton("Uninstall")
         self.list_button = QPushButton("List")
         self.search_button = QPushButton("Search")
         self.run_button = QPushButton("Custom cmd")
@@ -46,6 +47,7 @@ class PipInstaller(QWidget):
 
         # Connect the buttons to their functions
         self.install_button.clicked.connect(self.ui_install_package)
+        self.uninstall_button.clicked.connect(self.ui_uninstall_package)
         # TODO uninstall
         self.list_button.clicked.connect(self.ui_list_packages)
         self.search_button.clicked.connect(self.search_packages)
@@ -56,6 +58,7 @@ class PipInstaller(QWidget):
         package_layout.addWidget(self.package_label)
         package_layout.addWidget(self.package_input)
         package_layout.addWidget(self.install_button)
+        package_layout.addWidget(self.uninstall_button)
         package_layout.addWidget(self.list_button)
         package_layout.addWidget(self.search_button)
         package_layout.addWidget(self.run_button)
@@ -68,6 +71,8 @@ class PipInstaller(QWidget):
 
         self.setLayout(main_layout)
 
+        self.resize(800, 300)
+
     def browse_path(self):
         path = QtGui.QFileDialog.getExistingDirectory(self, "Select Directory")
         self.path_input.setText(path)
@@ -76,6 +81,9 @@ class PipInstaller(QWidget):
         package_name = self.package_input.text()
         py_pip.install(package_name, target_path=self.path_input.text())
 
+    def ui_uninstall_package(self):
+        package_name = self.package_input.text()
+        py_pip.uninstall(package_name)
 
     def ui_list_packages(self):
         self.output_table.setVisible(True)
