@@ -14,7 +14,7 @@ install auto adds `--target C:/target-path`, so don't add that, instead fill in 
 
 ### dependencies
 - [py-pip](https://github.com/hannesdelbeke/py-pip)
-- pip_search
+- `pip-search` (optional, used for search, type `pip-search` and click install)
 - qtpy
 
 <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/59059d9d1a2c092696dc66e00931cc1181a4ce1f/icons/Blender-Dark.svg" width="32" style="max-width: 100%;"> if using Blender, check out the [pip qt addon](https://github.com/hannesdelbeke/pip-qt-addon)
