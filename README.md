@@ -6,9 +6,9 @@ pip qt widget to install new python modules from within your python environment.
 
 ![image](https://github.com/hannesdelbeke/pip-qt/assets/3758308/272b56de-ada0-45f3-a813-75db8a749688)
 
-install auto adds `--target C:/target-path`, so don't add that 
 
 ### Command reference
+install auto adds `--target C:/target-path`, so don't add that 
 - upgrade, type `--upgrade package-name` in the text field & click install
 - editable install, type `-e C:/local-package-path` in the text field & click install
 
