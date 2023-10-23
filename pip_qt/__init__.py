@@ -1,11 +1,14 @@
-import sys
-from qtpy.QtWidgets import QFileDialog, QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QTextEdit
-from qtpy.QtWidgets import QTableWidget, QTableWidgetItem
+from qtpy.QtWidgets import (QFileDialog, QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit,
+                            QPushButton, QTextEdit, QTableWidget, QTableWidgetItem, QLineEdit, QApplication,
+                            QMainWindow, QTextEdit, QVBoxLayout, QPushButton, QWidget, QHeaderView)
 from qtpy import QtGui
-from qtpy.QtWidgets import QHeaderView
+from qtpy.QtGui import QColor, QTextCursor
+from qtpy.QtCore import Qt, QTimer
+import sys
 import py_pip
 from pathlib import Path
-from qtpy.QtCore import Qt
+import logging
+import subprocess
 
 
 class PipInstaller(QWidget):
@@ -46,10 +49,10 @@ class PipInstaller(QWidget):
         self.output_table.horizontalHeader().setStretchLastSection(True)
 
         # Connect the buttons to their functions
-        self.install_button.clicked.connect(self.ui_install_package)
-        self.uninstall_button.clicked.connect(self.ui_uninstall_package)
+        self.install_button.clicked.connect(self.install_package)
+        self.uninstall_button.clicked.connect(self.uninstall_package)
         # TODO uninstall
-        self.list_button.clicked.connect(self.ui_list_packages)
+        self.list_button.clicked.connect(self.list_packages)
         self.search_button.clicked.connect(self.search_packages)
         self.run_button.clicked.connect(self.run_command)
 
@@ -77,15 +80,27 @@ class PipInstaller(QWidget):
         path = QFileDialog.getExistingDirectory(self, "Select Directory")
         self.path_input.setText(path)
 
-    def ui_install_package(self):
+    def install_package(self):
         package_name = self.package_input.text()
-        py_pip.install(package_name, target_path=self.path_input.text())
+        logging.debug(f"installing package '{package_name}'")
+        output, error = py_pip.install(package_name, target_path=self.path_input.text())
 
-    def ui_uninstall_package(self):
+
+        self.output_box.setVisible(True)
+        self.output_table.setVisible(False)
+        self.add_error(error.decode())
+        self.output_box.insertPlainText(output.decode() + "\n")
+
+    def uninstall_package(self):
         package_name = self.package_input.text()
-        py_pip.uninstall(package_name)
+        output, error = py_pip.uninstall(package_name)
 
-    def ui_list_packages(self):
+        self.output_box.setVisible(True)
+        self.output_table.setVisible(False)
+        self.add_error(error.decode())
+        self.output_box.insertPlainText(output.decode() + "\n")
+
+    def list_packages(self):
         self.output_table.setVisible(True)
         self.output_box.setVisible(False)
 
@@ -170,17 +185,32 @@ class PipInstaller(QWidget):
 
     def run_command(self, custom_command=None):
         # Get the command to run
-        command = custom_command or self.package_input.text().split()
-
-        output, error = py_pip.run_command(command)
-
         self.output_table.setVisible(False)
         self.output_box.setVisible(True)
+        try:
+            command = custom_command or self.package_input.text().split()
+            output, error = py_pip.run_command(command)
+        except Exception as e:
+            self.add_error(str(e))
+            return
 
-        # Display the output in the text box
-        self.output_box.insertPlainText(output.decode())
-        self.output_box.insertPlainText("\nERRORS =====================\n")
-        self.output_box.insertPlainText(error.decode())
+        # print("RUNNING COMMAND AFTER INSTALL")
+        # self.output_table.setVisible(False)
+        # self.output_box.setVisible(True)
+        #
+        # # Display the output in the text box
+        # self.output_box.insertPlainText(output.decode())
+        # self.output_box.insertPlainText("\nERRORS =====================\n")
+        # self.output_box.insertPlainText(error.decode())
+
+    def add_error(self, lines):
+        color = "red"
+        if lines.lower().startswith("warning"):
+            color = "yellow"
+
+        self.output_box.setTextColor(QColor(color))
+        self.output_box.insertPlainText(lines + "\n")
+        self.output_box.setTextColor(QColor("black"))
 
 
 def show(dark=False):
