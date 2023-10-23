@@ -134,13 +134,16 @@ class PipInstaller(QWidget):
     def search_packages(self):
         import pip_search
 
-        self.output_table.setVisible(True)
-        self.output_box.setVisible(False)
-
         # Get the search query from the user
         query = self.package_input.text()
         if not query:
-            self.output_box.insertPlainText("Please enter a search query")
+            self.output_box.insertPlainText("Please enter a search query \n")
+            self.output_table.setVisible(False)
+            self.output_box.setVisible(True)
+            return
+
+        self.output_table.setVisible(True)
+        self.output_box.setVisible(False)
 
         # Search for packages on PyPI
         packages = list(pip_search.search(query))
@@ -208,9 +211,12 @@ class PipInstaller(QWidget):
         if lines.lower().startswith("warning"):
             color = "yellow"
 
+        # text_color = self.output_box.textColor()
+        # get text color from style for this
+        text_color = self.output_box.palette().color(QtGui.QPalette.Text)
         self.output_box.setTextColor(QColor(color))
         self.output_box.insertPlainText(lines + "\n")
-        self.output_box.setTextColor(QColor("black"))
+        self.output_box.setTextColor(text_color)
 
 
 def show(dark=False):
