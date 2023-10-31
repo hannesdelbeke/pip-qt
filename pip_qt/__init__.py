@@ -37,6 +37,7 @@ class PipInstaller(QWidget):
         self.list_button = QPushButton("List")
         self.search_button = QPushButton("Search")
         self.run_button = QPushButton("Custom cmd")
+        self.run_button.setVisible(False)  # TODO needs fixing
 
         # Create the output text box
         self.output_box = QTextEdit()
@@ -51,7 +52,6 @@ class PipInstaller(QWidget):
         # Connect the buttons to their functions
         self.install_button.clicked.connect(self.install_package)
         self.uninstall_button.clicked.connect(self.uninstall_package)
-        # TODO uninstall
         self.list_button.clicked.connect(self.list_packages)
         self.search_button.clicked.connect(self.search_packages)
         self.run_button.clicked.connect(self.run_command)
