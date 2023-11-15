@@ -1,4 +1,6 @@
 # pip-qt
+![PyPI - Version](https://img.shields.io/pypi/v/pip-qt)
+
 pip qt widget to install new python modules from within your python environment.  
 
 > ⚠️ WARNING, since this runs in Qt, you might get bugs when trying to (un)install or update the active Qt bindings.
