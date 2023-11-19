@@ -28,6 +28,6 @@ install auto adds `--target C:/target-path`, so don't add that, instead fill in 
 
 
 ### Similar
-- https://github.com/open-cogsci/python-qtpip 3y old, uses pip search, outdated, unclear docs
+- https://github.com/open-cogsci/python-qtpip 3y old, outdated: uses pip search which is not supported anymore ! , unclear docs
 - https://github.com/techbliss/Pip_QT_Gui 8 year old, PyQt4
 - https://github.com/NathanVaughn/PipQt 4year old, - PySide2, nice UI
