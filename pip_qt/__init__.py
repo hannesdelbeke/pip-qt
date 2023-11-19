@@ -218,8 +218,12 @@ def show(dark=False):
         app = QApplication(sys.argv)
 
     if dark:
-        import blender_stylesheet
-        blender_stylesheet.setup()
+        try:
+            import blender_stylesheet
+            blender_stylesheet.setup()
+        except ImportError:
+            logging.warning("Failed to set dark theme, blender-qt-stylesheet not installed")
+          
     window = PipInstaller()
     window.show()
 
