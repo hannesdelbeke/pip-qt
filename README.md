@@ -8,13 +8,16 @@ pip qt widget to install new python modules from within your python environment.
 
 ![image](https://github.com/hannesdelbeke/pip-qt/assets/3758308/272b56de-ada0-45f3-a813-75db8a749688)
 
-
-## Instructions
-
+Show the window:
 ```python
 import pip_qt
 widget = pip_qt.show()
 ```
+
+### Dcc plugins
+<img src="https://raw.githubusercontent.com/tandpfun/skill-icons/59059d9d1a2c092696dc66e00931cc1181a4ce1f/icons/Blender-Dark.svg" width="32" style="max-width: 100%;"> if using Blender, check out the [pip qt addon](https://github.com/hannesdelbeke/pip-qt-addon)  
+<img src="https://raw.githubusercontent.com/hannesdelbeke/gamedev-emojis/main/tools/emoji-maya.png" width="32" style="max-width: 100%;"> if using Maya, check out the [maya-qt-pip plugin](https://github.com/hannesdelbeke/maya-qt-pip)  
+
 
 ## Commands
 - For advanced users, you can add options in the package name field, e.g. `--index-url http://my.package.repo/simple/ SomePackage` instead of `SomePackage`
@@ -51,10 +54,6 @@ developed on Windows, Mac support in progress
 - `pip-search` (optional, used for search, type `pip-search` and click install)
 - qtpy
 
-
-### Dcc plugins
-<img src="https://raw.githubusercontent.com/tandpfun/skill-icons/59059d9d1a2c092696dc66e00931cc1181a4ce1f/icons/Blender-Dark.svg" width="32" style="max-width: 100%;"> if using Blender, check out the [pip qt addon](https://github.com/hannesdelbeke/pip-qt-addon)  
-<img src="https://raw.githubusercontent.com/hannesdelbeke/gamedev-emojis/main/tools/emoji-maya.png" width="32" style="max-width: 100%;"> if using Maya, check out the [maya-qt-pip plugin](https://github.com/hannesdelbeke/maya-qt-pip)  
 
 
 ### Similar
