@@ -8,14 +8,13 @@ pip qt widget to install new python modules from within your python environment.
 
 ![image](https://github.com/hannesdelbeke/pip-qt/assets/3758308/272b56de-ada0-45f3-a813-75db8a749688)
 
+
+## Instructions
+
 ```python
 import pip_qt
 widget = pip_qt.show()
 ```
-
-
-## Instructions
-Open the window from the menu `Window/Pip manager`
 
 ## Commands
 - For advanced users, you can add options in the package name field, e.g. `--index-url http://my.package.repo/simple/ SomePackage` instead of `SomePackage`
