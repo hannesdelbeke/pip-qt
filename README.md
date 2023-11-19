@@ -24,7 +24,7 @@ install auto adds `--target C:/target-path`, so don't add that, instead fill in 
 Open from the menu `Window/Pip manager`
 
 ### 🔍 search packages on PyPI
-- type package name in package field
+- type `PackageName` in package field. For advanced users, you can add options, e.g. `--index-url http://my.package.repo/simple/ SomePackage`
 - click search
 
 ### ▶️ install a package
