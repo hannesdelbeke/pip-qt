@@ -13,18 +13,15 @@ import pip_qt
 widget = pip_qt.show()
 ```
 
-### Command reference
-install auto adds `--target C:/target-path`, so don't add that, instead fill in the target field
-- upgrade, type `--upgrade package-name` in the text field & click install
-- editable install, type `-e C:/local-package-path` in the text field & click install
-
-
 
 ## Instructions
 Open the window from the menu `Window/Pip manager`
 
 ## Commands
-For advanced users, you can add options in the package name field, e.g. `--index-url http://my.package.repo/simple/ SomePackage` instead of `SomePackage`
+- For advanced users, you can add options in the package name field, e.g. `--index-url http://my.package.repo/simple/ SomePackage` instead of `SomePackage`
+- install auto adds `--target C:/target-path`, so don't add that, instead fill in the target field
+- upgrade, type `--upgrade package-name` in the text field & click install
+- editable install, type `-e C:/local-package-path` in the text field & click install
 
 ### 🔍 search packages on PyPI
 - type `PackageName` in package field.
