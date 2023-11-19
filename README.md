@@ -18,11 +18,42 @@ install auto adds `--target C:/target-path`, so don't add that, instead fill in 
 - upgrade, type `--upgrade package-name` in the text field & click install
 - editable install, type `-e C:/local-package-path` in the text field & click install
 
-### dependencies
+
+
+## Instructions
+Open from the menu `Window/Pip manager`
+
+### 🔍 search packages on PyPI
+- type package name in package field
+- click search
+
+### ▶️ install a package
+- type package name in package field
+- click install
+
+### ▶️ install a local package 
+A local editable install speeds up your development.
+Changes to your scripts in your IDE are automatically loaded in your app (after app restart or `importlib.reload`).
+- type `-e path/to/packaged/repo` (ensure your local repo has a `pyproject.toml` or `setup.py`)
+- click install
+
+### 📃 list installed packages
+See all installed packages, their versions, and location
+- click the list button
+
+# TODO
+- [ ] ❌ uninstall
+- [ ] 📃 list dependencies
+
+
+### Dependencies
+developed on Windows, Mac support in progress
 - [py-pip](https://github.com/hannesdelbeke/py-pip)
 - `pip-search` (optional, used for search, type `pip-search` and click install)
 - qtpy
 
+
+### Dcc plugins
 <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/59059d9d1a2c092696dc66e00931cc1181a4ce1f/icons/Blender-Dark.svg" width="32" style="max-width: 100%;"> if using Blender, check out the [pip qt addon](https://github.com/hannesdelbeke/pip-qt-addon)  
 <img src="https://raw.githubusercontent.com/hannesdelbeke/gamedev-emojis/main/tools/emoji-maya.png" width="32" style="max-width: 100%;"> if using Maya, check out the [maya-qt-pip plugin](https://github.com/hannesdelbeke/maya-qt-pip)  
 
