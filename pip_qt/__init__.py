@@ -21,7 +21,7 @@ class PipInstaller(QWidget):
 
         # create row at top with browse button and text edit field
         self.path_label = QLabel("Path:")
-        self.path_input = QLineEdit(str(py_pip.default_target_path))
+        self.path_input = QLineEdit(str(py_pip.default_target_path.resolve()))
         self.path_button = QPushButton("Browse")
         self.path_button.clicked.connect(self.browse_path)
         self.path_layout = QHBoxLayout()
@@ -125,7 +125,7 @@ class PipInstaller(QWidget):
 
         # slow
         for i, (name, version) in enumerate(packages):
-            location = str(Path(py_pip.get_location(name)))  # slo
+            location = str(Path(py_pip.get_location(name)).resolve())  # slow
             location_item = QTableWidgetItem(location)
             table.setItem(i, 2, location_item)
             self.repaint()
