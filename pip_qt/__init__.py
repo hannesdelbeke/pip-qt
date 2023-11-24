@@ -9,6 +9,7 @@ import py_pip
 from pathlib import Path
 import logging
 import subprocess
+import shlex
 
 
 class PipInstaller(QWidget):
@@ -81,9 +82,20 @@ class PipInstaller(QWidget):
         self.path_input.setText(path)
 
     def install_package(self):
-        package_name = self.package_input.text()
+        package_name = None
+
+        text = self.package_input.text()
+        text.replace("\\", "\\\\")
+        commands = shlex.split(text, posix=False)
+        if len(commands)==1:
+            package_name = commands[0]
+            commands = []
+
         logging.debug(f"installing package '{package_name}'")
-        output, error = py_pip.install(package_name, target_path=self.path_input.text())
+        output, error = py_pip.install(package_name=package_name,
+                                       target_path=self.path_input.text(),
+                                       options=commands
+                                       )
 
         self.output_box.setVisible(True)
         self.output_table.setVisible(False)
