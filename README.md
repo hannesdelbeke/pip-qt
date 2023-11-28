@@ -16,7 +16,7 @@ widget = pip_qt.show()
 
 ### Dcc plugins
 <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/59059d9d1a2c092696dc66e00931cc1181a4ce1f/icons/Blender-Dark.svg" width="32" style="max-width: 100%;"> if using Blender, check out the [pip qt addon](https://github.com/hannesdelbeke/pip-qt-addon)  
-<img src="https://raw.githubusercontent.com/hannesdelbeke/gamedev-emojis/main/tools/emoji-maya.png" width="32" style="max-width: 100%;"> if using Maya, check out the [maya-qt-pip plugin](https://github.com/hannesdelbeke/maya-qt-pip)  
+<img src="https://raw.githubusercontent.com/hannesdelbeke/gamedev-emojis/main/tools/emoji-maya.png" width="32" style="max-width: 100%;"> if using Maya, check out the [maya-pip-qt plugin](https://github.com/hannesdelbeke/maya-pip-qt)  
 
 
 ## Commands
