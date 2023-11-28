@@ -22,7 +22,7 @@ class PipInstaller(QWidget):
 
         # create row at top with browse button and text edit field
         self.path_label = QLabel("Path:")
-        self.path_input = QLineEdit(str(py_pip.default_target_path.resolve()))
+        self.path_input = QLineEdit(str(Path(py_pip.default_target_path).resolve()))
         self.path_button = QPushButton("Browse")
         self.path_button.clicked.connect(self.browse_path)
         self.path_layout = QHBoxLayout()
