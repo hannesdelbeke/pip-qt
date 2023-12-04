@@ -58,6 +58,6 @@ developed on Windows, Mac support in progress
 
 ### Similar
 let me know [here](https://github.com/hannesdelbeke/pip-qt/issues/new) if you find a similar project, and I'll link it below:
-- https://github.com/open-cogsci/python-qtpip 3y old, outdated: uses pip search which is not supported anymore ! , unclear docs
-- https://github.com/techbliss/Pip_QT_Gui 8 year old, PyQt4
-- https://github.com/NathanVaughn/PipQt 4year old, - PySide2, nice UI
+- DEAD https://github.com/open-cogsci/python-qtpip 3y old, outdated: uses pip search which is not supported anymore , unclear docs
+- DEAD https://github.com/techbliss/Pip_QT_Gui 8 year old, PyQt4
+- ARCHIVED https://github.com/NathanVaughn/PipQt 4year old, - PySide2, nice UI
