@@ -12,7 +12,7 @@ widget = pip_qt.show()
 ```
 
 ## Gotchas
-⚠️ WARNING, since this runs in Qt, you might get bugs when trying to (un)install or update the active Qt bindings.
+⚠️ WARNING, since this runs in Qt, you might get bugs when trying to (un)install or update the active Qt bindings.  
 or any package that has a Qt binding as (indirect) dependency
 
 ### Dcc plugins
