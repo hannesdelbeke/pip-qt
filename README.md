@@ -3,9 +3,6 @@
 
 pip qt widget to install new python modules from within your python environment.  
 
-> ⚠️ WARNING, since this runs in Qt, you might get bugs when trying to (un)install or update the active Qt bindings.
-> or any package that has a Qt binding as (indirect) dependency
-
 ![image](https://github.com/hannesdelbeke/pip-qt/assets/3758308/272b56de-ada0-45f3-a813-75db8a749688)
 
 Show the window:
@@ -13,6 +10,10 @@ Show the window:
 import pip_qt
 widget = pip_qt.show()
 ```
+
+## Gotchas
+⚠️ WARNING, since this runs in Qt, you might get bugs when trying to (un)install or update the active Qt bindings.
+or any package that has a Qt binding as (indirect) dependency
 
 ### Dcc plugins
 <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/59059d9d1a2c092696dc66e00931cc1181a4ce1f/icons/Blender-Dark.svg" width="32" style="max-width: 100%;"> if using Blender, check out the [pip qt addon](https://github.com/hannesdelbeke/pip-qt-addon)  
