@@ -137,8 +137,14 @@ class PipInstaller(QWidget):
 
         # slow
         for i, (name, version) in enumerate(packages):
-            location = str(Path(py_pip.get_location(name)).resolve())  # slow
-            location_item = QTableWidgetItem(location)
+            package_path = py_pip.get_location(name)
+            location_item = QTableWidgetItem()
+            if package_path:
+                location = str(Path(package_path).resolve())  # slow
+            else:
+                location = "Not found"
+                location_item.setBackground(QtGui.QColor(150, 100, 30))
+            location_item.setText(location)
             table.setItem(i, 2, location_item)
             self.repaint()
 
