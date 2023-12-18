@@ -1,14 +1,11 @@
-from qtpy.QtWidgets import (QFileDialog, QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit,
-                            QPushButton, QTextEdit, QTableWidget, QTableWidgetItem, QLineEdit, QApplication,
-                            QMainWindow, QTextEdit, QVBoxLayout, QPushButton, QWidget, QHeaderView)
+from qtpy.QtWidgets import (QFileDialog,QHBoxLayout, QLabel, QTableWidget, QTableWidgetItem, QLineEdit, QApplication,
+                            QTextEdit, QVBoxLayout, QPushButton, QWidget, QHeaderView)
 from qtpy import QtGui
-from qtpy.QtGui import QColor, QTextCursor
-from qtpy.QtCore import Qt, QTimer
+from qtpy.QtGui import QColor
 import sys
 import py_pip
 from pathlib import Path
 import logging
-import subprocess
 import shlex
 
 
