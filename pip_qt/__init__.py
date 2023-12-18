@@ -56,6 +56,7 @@ class PipInstaller(QWidget):
         self.list_button.clicked.connect(self.list_packages)
         self.search_button.clicked.connect(self.search_packages)
         self.run_button.clicked.connect(self.run_command)
+        self.package_input.textChanged.connect(self.filter_packages)
 
         # Create the layout
         package_layout = QHBoxLayout()
@@ -76,6 +77,16 @@ class PipInstaller(QWidget):
         self.setLayout(main_layout)
 
         self.resize(800, 300)
+
+    def filter_packages(self):
+        """Filter the packages in the table based on the text in the package input field"""
+        filter_text = self.package_input.text().lower()
+        for i in range(self.output_table.rowCount()):
+            package_name = self.output_table.item(i, 0).text().lower()
+            if filter_text in package_name:
+                self.output_table.setRowHidden(i, False)
+            else:
+                self.output_table.setRowHidden(i, True)
 
     def browse_path(self):
         path = QFileDialog.getExistingDirectory(self, "Select Directory")
