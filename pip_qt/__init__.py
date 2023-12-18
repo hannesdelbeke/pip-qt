@@ -115,6 +115,9 @@ class PipInstaller(QWidget):
         self.output_table.setVisible(True)
         self.output_box.setVisible(False)
 
+        # clear input field
+        self.package_input.setText("")
+
         packages = py_pip.list()
 
         table = self.output_table
